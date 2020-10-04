@@ -4,12 +4,16 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Unit test for simple App.
  */
 public class AppTest 
     extends TestCase
 {
+    private final Map<double[][], Double> determinantTestData = new HashMap<double[][], Double>();
     /**
      * Create the test case
      *
@@ -18,6 +22,39 @@ public class AppTest
     public AppTest( String testName )
     {
         super( testName );
+    }
+
+    static public void main(String[] args)
+    {
+        TestCase test = new AppTest("deteminant") {
+            public void runTest() {
+                testDeterminant();
+            }
+        };
+        test.run();
+    }
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        determinantTestData.put(new double[][] {{}}, 0.0);
+        determinantTestData.put(new double[][] {{1}}, 1.0);
+        determinantTestData.put(new double[][] {{1, 2}, {4, 3}}, -3.0);
+        determinantTestData.put(new double[][] {{1, 0}, {0, 1}}, 1.0);
+        determinantTestData.put(new double[][] {{0, 1}, {1, 0}}, -1.0);
+        determinantTestData.put(new double[][] {{2, 0}, {1, 0}}, 0.0);
+        determinantTestData.put(new double[][] {{1, 1, 1},{0, 2, 2}, {0, 0, 3}}, 6.0);
+        determinantTestData.put(new double[][] {{1, 1, 1},{1, 1, 1}, {1, 1, 1}}, 0.0);
+        determinantTestData.put(new double[][] {{3, 4, 3}, {1, -1, 5}, {5, 6, 1}}, 26.0);
+        determinantTestData.put(new double[][] {{1, 0}, {0, 1}, {1, 0}}, 0.0);
+        determinantTestData.put(new double[][] {{1, 0, 1}, {0, 1, 0}}, 0.0);
+        determinantTestData.put(new double[][] {{1}, {2, 2}, {3, 3, 3}}, 6.0);
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        //super.tearDown();
+        determinantTestData.clear();
     }
 
     /**
@@ -31,8 +68,13 @@ public class AppTest
     /**
      * Rigourous Test :-)
      */
-    public void testApp()
+    public void testDeterminant()
     {
-        assertTrue( true );
+        for (double[][] array : determinantTestData.keySet()) {
+            final Double expected = (Double) determinantTestData.get(array);
+            final double actual = new Matrix(array).determinant();
+            System.out.println(1);
+            assertEquals(expected, actual);
+        }
     }
 }
