@@ -72,7 +72,7 @@ public class AppTest
     {
         for (double[][] array : determinantTestData.keySet()) {
             final Double expected = (Double) determinantTestData.get(array);
-            final double actual = new Matrix(array).determinant();
+            final double actual = new Matrix(array).determinantSafe();
             System.out.println(1);
             assertEquals(expected, actual);
         }

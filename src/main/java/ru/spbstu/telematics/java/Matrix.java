@@ -55,7 +55,7 @@ public class Matrix {
      * @param j номер столбца, нумеруется с 0.
      * @param val новое значение элемента.
      * @throws ArrayIndexOutOfBoundsException в случае некорректных индексов.
-     * @see Matrix#getElement(int, int) 
+     * @see Matrix#getElement(int, int)
      */
     public void setElement(int i, int j, double val) throws ArrayIndexOutOfBoundsException {
         matrix[i][j] = val;
@@ -161,12 +161,13 @@ public class Matrix {
      * Поиск определителя матрицы методом миноров.
      * Для ускорения работы ищется строка или столбец с наибольшим
      * количеством нулей.
-     * @return опеределитель матрицы
+     * @return опеределитель матрицы.
+     * @throws Exception если матрица не квадратная.
      * @see Matrix#minorMatrix(int, int)
      */
-    public double determinant() {
+    public double determinant() throws Exception {
         if (matrix.length != matrix[0].length)
-            return 0;
+            throw new Exception("Matrix is not square!");
         if (matrix.length == 1)
             return matrix[0][0];
         if (matrix.length == 2)
@@ -209,6 +210,23 @@ public class Matrix {
                 else
                     res -= d;
             }
+        }
+        return res;
+    }
+
+    /**
+     * Аналогичен методу {@link Matrix#determinant()}, но не выкидывает
+     * исключение, а возвращает 0, если матрица не квадратная.
+     * @return определитель матрицы или 0, если матрица не квадратная.
+     * @see Matrix#determinant()
+     */
+    public double determinantSafe() {
+        double res;
+        try{
+            res = determinant();
+        }
+        catch (Exception e) {
+            return 0;
         }
         return res;
     }
