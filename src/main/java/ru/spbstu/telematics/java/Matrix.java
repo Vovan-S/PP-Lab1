@@ -17,6 +17,51 @@ public class Matrix {
     double[][] matrix;
 
     /**
+     * Доступ к полу {@link Matrix#matrix} на чтение.
+     * @return массив со значениями матрицы.
+     * @see Matrix#setMatrix(double[][]) 
+     */
+    public final double[][] getMatrix() {
+        return matrix;
+    }
+
+    /**
+     * Доступ к полу {@link Matrix#matrix} на запись.
+     * После того, как новый массив был присвоен, вызывается
+     * функция {@link Matrix#normalise()}.
+     * @param arr новый массив со значениями матрицы.
+     * @see Matrix#getMatrix() 
+     */
+    public void setMatrix(double[][] arr) {
+        matrix = arr;
+        normalise();
+    }
+
+    /**
+     * Доступ к отдельному элементу матрицы на чтение.
+     * @param i номер строки, нумеруется с 0.
+     * @param j номер столбца, нумеруется с 0.
+     * @return значение элемента ij.
+     * @throws ArrayIndexOutOfBoundsException в случае некорректных индексов.
+     * @see Matrix#setElement(int, int, double) 
+     */
+    public double getElement(int i, int j) throws ArrayIndexOutOfBoundsException {
+        return matrix[i][j];
+    }
+
+    /**
+     * Доступ к отдельному элементу матрицы на запись.
+     * @param i номер строки, нумеруется с 0.
+     * @param j номер столбца, нумеруется с 0.
+     * @param val новое значение элемента.
+     * @throws ArrayIndexOutOfBoundsException в случае некорректных индексов.
+     * @see Matrix#getElement(int, int) 
+     */
+    public void setElement(int i, int j, double val) throws ArrayIndexOutOfBoundsException {
+        matrix[i][j] = val;
+    }
+
+    /**
      * Количество знаков после десятичной точки при выводе матрицы на печать.
      * По умолчанию имеет значение 3.
      */
@@ -32,7 +77,7 @@ public class Matrix {
     }
 
     /**
-     * Конструктор по умолчанию, создает матрицу [0]
+     * Конструктор по умолчанию, создает матрицу [0].
      * @see Matrix#Matrix(double) 
      * @see Matrix#Matrix(double[][])
      */
@@ -88,10 +133,10 @@ public class Matrix {
     }
 
     /**
-     * Возвращает матрицу, соответсвующую минору (i, j)
-     * @param i номер строки элемента, для которого ищем минор
-     * @param j номер столбца элемента, для которого ищем минор
-     * @return матрица, соответсвующая минору (i, j)
+     * Возвращает матрицу, соответсвующую минору (i, j).
+     * @param i номер строки элемента, для которого ищем минор. Нумеруется с 0.
+     * @param j номер столбца элемента, для которого ищем минор. Нумеруется с 0.
+     * @return матрица, соответсвующая минору (i, j).
      */
     private Matrix minorMatrix(int i, int j) {
         Matrix res = new Matrix(new double[matrix.length - 1][matrix.length - 1]);
@@ -124,6 +169,8 @@ public class Matrix {
             return 0;
         if (matrix.length == 1)
             return matrix[0][0];
+        if (matrix.length == 2)
+            return matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1];
         double res = 0;
         int maxZeros = 0;
         int maxZerosIndex = 0;
@@ -209,4 +256,5 @@ public class Matrix {
         }
         return res.toString();
     }
+
 }
