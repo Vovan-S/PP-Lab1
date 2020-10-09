@@ -3,14 +3,26 @@ package ru.spbstu.telematics.java;
 import java.io.File;
 
 /**
- * Hello world!
- *
+ * Выполнимый класс для вычисления определителя матрицы. Матрицу считывает из
+ * файл.
+ * @see MatrixFileReader
+ * @see Matrix
  */
 public class Determinant
 {
+    /**
+     * Вычисление определителя матрицы из файла.
+     * @param args относительный путь к файлу с матрицей.
+     * @see MatrixFileReader
+     * @see Matrix
+     */
     public static void main( String[] args ) {
         if (args.length == 0) {
             System.out.println("Missing argument: expected path to file!");
+            return;
+        }
+        if (args.length > 1) {
+            System.out.println("Too much arguments!");
             return;
         }
         File f = new File(args[0]);

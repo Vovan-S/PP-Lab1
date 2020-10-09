@@ -5,14 +5,29 @@ import java.io.FileReader;
 import java.util.Scanner;
 import java.util.Locale;
 
+/**
+ * Класс для считывания матрицы из файла.
+ * @see Matrix
+ */
 public class MatrixFileReader {
+    /**
+     * Файл матрицы
+     */
     File file;
 
-
+    /**
+     * Конструктор
+     * @param f файл матрицы
+     */
     public MatrixFileReader(File f) {
         file = f;
     }
 
+    /**
+     * Считывает матрицу из файла.
+     * @return матрица, считанная из файла.
+     * @throws Exception неверный формат файла.
+     */
     public Matrix read() throws Exception {
         FileReader fr = new FileReader(file);
         Scanner sc = new Scanner(fr);
