@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Unit test for simple App.
+ * Тесты для вычисления определителя матрицы
  */
 public class AppTest 
     extends TestCase
@@ -39,13 +39,13 @@ public class AppTest
         super.setUp();
         determinantTestData.put(new double[][] {{}}, 0.0);
         determinantTestData.put(new double[][] {{1}}, 1.0);
-        determinantTestData.put(new double[][] {{1, 2}, {4, 3}}, -3.0);
+        determinantTestData.put(new double[][] {{1, 2}, {4, 3}}, -5.0);
         determinantTestData.put(new double[][] {{1, 0}, {0, 1}}, 1.0);
         determinantTestData.put(new double[][] {{0, 1}, {1, 0}}, -1.0);
         determinantTestData.put(new double[][] {{2, 0}, {1, 0}}, 0.0);
         determinantTestData.put(new double[][] {{1, 1, 1},{0, 2, 2}, {0, 0, 3}}, 6.0);
         determinantTestData.put(new double[][] {{1, 1, 1},{1, 1, 1}, {1, 1, 1}}, 0.0);
-        determinantTestData.put(new double[][] {{3, 4, 3}, {1, -1, 5}, {5, 6, 1}}, 26.0);
+        determinantTestData.put(new double[][] {{3, 4, 3}, {1, -1, 5}, {5, 6, 1}}, 36.0);
         determinantTestData.put(new double[][] {{1, 0}, {0, 1}, {1, 0}}, 0.0);
         determinantTestData.put(new double[][] {{1, 0, 1}, {0, 1, 0}}, 0.0);
         determinantTestData.put(new double[][] {{1}, {2, 2}, {3, 3, 3}}, 6.0);
@@ -73,8 +73,10 @@ public class AppTest
         for (double[][] array : determinantTestData.keySet()) {
             final Double expected = (Double) determinantTestData.get(array);
             final double actual = new Matrix(array).determinantSafe();
-            System.out.println(1);
+            //System.out.println(1);
+            System.out.println("expected: " + expected + " got: " + actual);
             assertEquals(expected, actual);
         }
+        System.out.println("Tests are passed");
     }
 }
