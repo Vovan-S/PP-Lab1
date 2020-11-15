@@ -1,5 +1,5 @@
 *.class
 bin
-/target/
+*/target/
 .settings
 /.idea
