@@ -513,17 +513,15 @@ public class MyBag<T> implements Bag<T> {
             return true;
         }
         boolean changed = false;
-        Set<Object> removed = new HashSet<Object>();
-        for(Object o: collection) {
-            if (removed.contains(o) || o == null)
-                continue;
-            int bagCount = getCount(o);
-            if (bagCount == 0)
-                continue;
+        System.out.println(collection);
+        for (Object o: uniqueSet()) {
             int colCount = countInCollection(collection, o);
-            remove(o, bagCount - colCount);
-            removed.add(o);
-            changed = true;
+            int bagCount = getCount(o);
+            System.out.println("" + o + " c: " + colCount + " b: " + bagCount);
+            if (bagCount > colCount) {
+                remove(o, bagCount - colCount);
+                changed = true;
+            }
         }
         return changed;
     }
@@ -535,7 +533,7 @@ public class MyBag<T> implements Bag<T> {
         boolean changed = false;
         Set<Object> removed = new HashSet<Object>();
         for (Object o: collection) {
-            if (removed.contains(o) || o == null || !contains(o))
+            if (removed.contains(o)  || !contains(o))
                 continue;
             int colCount = countInCollection(collection, o);
             remove(o, colCount);
