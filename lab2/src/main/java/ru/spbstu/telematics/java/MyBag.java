@@ -669,8 +669,7 @@ public class MyBag<T> implements Bag<T> {
         while (i < table.length) {
             MyNode<T> p = table[i];
             while (p != null) {
-                result += (p.data.getKey() == null) ? 0 :
-                        p.data.getKey().hashCode() ^ p.data.getValue();
+                result += ((p.data.getKey() == null) ? 0 : p.data.getKey().hashCode()) ^ p.data.getValue();
                 p = p.next;
             }
             i++;
@@ -678,6 +677,9 @@ public class MyBag<T> implements Bag<T> {
         return result;
     }
 
+    /**
+     * @return Строковое представление сумки.
+     */
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder("[");
