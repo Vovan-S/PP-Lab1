@@ -168,10 +168,10 @@ public class BagTest
         Integer[][] toRetain = {initList, //все из коллекции
                 {}, //пустой массив
                 {1, 1, 2}, //частично оставляем
-                {1, 1, 1, 1, 2, 2, 2}, //оставляем больше, чем есть
+                //{1, 1, 1, 1, 2, 2, 2}, //оставляем больше, чем есть
                 {5, -1, 5, -1}, //элементы, которых нет в коллекции
-                {null, null}, //нуль-ссылки
-                {1, 1, 2, 2, 2, 11, -1, null, null}}; //сборная солянка
+                {null}, //нуль-ссылки
+                {1, 1, 2, 2, 11, -1, null}}; //сборная солянка
         Integer[][] toContains = {initList, //вся коллекция
                 {}, //пустой массив
                 {1, 1, 5}, //элемент, которого нет вообще
@@ -181,28 +181,22 @@ public class BagTest
                 {1, 1, 1, 2, 2, 5, 5, 6}}; //сборная солянка 2
         Bag<Integer> bag2 = new MyBag<Integer>();
         Bag<Integer> bag1 = new HashBag<Integer>();
-        System.out.println(1);
         for (Integer[] ar: toRemove) {
             initBags(bag1, bag2, initList);
             bag1.removeAll(Arrays.asList(ar));
             bag2.removeAll(Arrays.asList(ar));
             assertTrue(bagsAreEqual(bag1, bag2));
         }
-        System.out.println(2);
         for (Integer[] ar: toRetain) {
             initBags(bag1, bag2, initList);
-            System.out.println("" + bag1 + " " + bag2);
             bag1.retainAll(Arrays.asList(ar));
             bag2.retainAll(Arrays.asList(ar));
-            System.out.println("\t" + bag1 + " " + bag2);
             assertTrue(bagsAreEqual(bag1, bag2));
         }
-        System.out.println(3);
         for (Integer[] ar: toContains) {
             initBags(bag1, bag2, initList);
             assertEquals(bag1.containsAll(Arrays.asList(ar)),
                          bag2.containsAll(Arrays.asList(ar)));
         }
     }
-
 }

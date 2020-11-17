@@ -363,8 +363,12 @@ public class MyBag<T> implements Bag<T> {
             }
     }
 
-    //TODO: дописать жавадоки
 
+    /**
+     * Возвращает количество объектов в сумке.
+     * @param o объект, количество которого считаем.
+     * @return количество объектов в сумке.
+     */
     public int getCount(Object o) {
         MyNode<T> p = getNode(o);
         if (p == null)
@@ -373,10 +377,24 @@ public class MyBag<T> implements Bag<T> {
             return p.getData().getValue();
     }
 
+    /**
+     * Добавляет объект с кратностью 1. Аналогично вызову
+     * <code>add(o, 1)</code>.
+     * @param o добавляемый объект.
+     * @return <code>true</code>, если объект добавлен. Всегда возвращается <code>true</code>.
+     * @see MyBag#add(Object, int)
+     */
     public boolean add(Object o) {
         return add(o, 1);
     }
 
+    /**
+     * Добавляет несколько копий объекта.
+     * @param o добавляемый объект.
+     * @param i количество копий, если <code>i < 1</code>, объект не добавляется.
+     * @return <code>true</code>, если объект был добавлен, иначе <code>false</code>.
+     * @see MyBag#add(Object)
+     */
     public boolean add(Object o, int i) {
         if (i < 1)
             return false;
@@ -391,6 +409,12 @@ public class MyBag<T> implements Bag<T> {
         return true;
     }
 
+    /**
+     * Удаляет все копии объекта из сумки.
+     * @param o удаляемый объект.
+     * @return <code>true</code>, если объект был ранее в сумке, иначе <code>false</code>.
+     * @see MyBag#remove(Object, int)
+     */
     public boolean remove(Object o) {
         int i = getIndex(o);
         MyNode<T> p = table[i];
@@ -410,17 +434,32 @@ public class MyBag<T> implements Bag<T> {
         return false;
     }
 
+    /**
+     * Добавляет все элементы коллекции, учитывая кратность.
+     * @param c коллекция.
+     * @return всегда <code>true</code>.
+     */
     public boolean addAll(Collection c) {
         for (Object o: c)
             add(o);
         return true;
     }
 
+    /**
+     * Очищает сумку.
+     */
     public void clear() {
         Arrays.fill(table, null);
         count = 0;
     }
 
+    /**
+     * Удаляет <code>i</code> копий объекта из сумки.
+     * @param o удаляемый объект.
+     * @param i количество удаляемых копий. Если <code>i < 1</code>,
+     *          удаление не происходит.
+     * @return <code>true</code>, если что-то было удалено, иначе <code>false</code>.
+     */
     public boolean remove(Object o, int i) {
         if (i < 1)
             return false;
@@ -454,6 +493,9 @@ public class MyBag<T> implements Bag<T> {
         return false;
     }
 
+    /**
+     * @return множество со всеми различными объектами сумки.
+     */
     public Set uniqueSet() {
         Set<T> res = new HashSet<T>();
         for (MyNode<T> n: table) {
@@ -469,22 +511,40 @@ public class MyBag<T> implements Bag<T> {
         return res;
     }
 
+    /**
+     * @return количество объектов в сумке, учитывая кратность.
+     */
     public int size() {
         return count;
     }
 
+    /**
+     * @return <code>true</code>, если в сумке ничего не содержится, иначе <code>false</code>.
+     */
     public boolean isEmpty() {
         return count == 0;
     }
 
+    /**
+     * Проверяет наличие объекта в сумке.
+     * @param o проверяемый объект.
+     * @return <code>true</code>, если объект есть в сумке, иначе <code>false</code>.
+     */
     public boolean contains(Object o) {
         return getCount(o) > 0;
     }
 
+    /**
+     * @return итератор по сумке.
+     * @see BagIterator
+     */
     public Iterator<T> iterator() {
         return new BagIterator<T>(table);
     }
 
+    /**
+     * @return массив с объектами сумки, учитывая кратность.
+     */
     public Object[] toArray() {
         Object[] res = new Object[size()];
         int i = 0;
@@ -494,6 +554,12 @@ public class MyBag<T> implements Bag<T> {
         return res;
     }
 
+    /**
+     * Массив указанного типа из объектов этой сумки.
+     * @param a экземляр класса, тип которого будет присвоен массиву.
+     * @param <S> тип элементов возвращаемого массива.
+     * @return массив, тип элементов которого соответсвует типу параметра.
+     */
     public <S> S[] toArray(S[] a) {
         S[] res;
         if (size() <= a.length)
@@ -507,17 +573,20 @@ public class MyBag<T> implements Bag<T> {
         return res;
     }
 
+    /**
+     * Оставляет в сумке только элементы из коллекции, учитывая кратность.
+     * @param collection коллекция.
+     * @return <code>true</code>, если сумка была изменена, иначе <code>false</code>.
+     */
     public boolean retainAll(Collection collection) {
         if (collection == null) {
             clear();
             return true;
         }
         boolean changed = false;
-        System.out.println(collection);
         for (Object o: uniqueSet()) {
             int colCount = countInCollection(collection, o);
             int bagCount = getCount(o);
-            System.out.println("" + o + " c: " + colCount + " b: " + bagCount);
             if (bagCount > colCount) {
                 remove(o, bagCount - colCount);
                 changed = true;
@@ -526,6 +595,11 @@ public class MyBag<T> implements Bag<T> {
         return changed;
     }
 
+    /**
+     * Удаляет из сумки все элементы коллекции, учитывая кратность.
+     * @param collection коллекция.
+     * @return <code>true</code>, если сумка была изменена, иначе <code>false</code>.
+     */
     public boolean removeAll(Collection collection) {
         if (collection == null) {
             return false;
@@ -543,12 +617,18 @@ public class MyBag<T> implements Bag<T> {
         return changed;
     }
 
+    /**
+     * Проверяет, содержатся ли в сумке все элементы коллекции,
+     * учитывая кратность.
+     * @param collection коллекция.
+     * @return <code>true</code>, если содержатся, иначе <code>false</code>.
+     */
     public boolean containsAll(Collection collection) {
         if (collection == null)
             return true;
         Set<Object> removed = new HashSet<Object>();
         for(Object o: collection) {
-            if (removed.contains(o) || o == null)
+            if (removed.contains(o))
                 continue;
             if (getCount(o) < countInCollection(collection, o))
                 return false;
