@@ -23,7 +23,7 @@ public class Buyer implements Runnable {
             if (freeSeats == 0)
                 break;
             int count = r.nextInt(Math.min(freeSeats, 10)) + 1;
-            str.append(count).append(" tickets: [");
+            str.append(count).append(" ticket(s): [");
             int i = r.nextInt(h.getHeight());
             int j = r.nextInt(h.getWidth());
             boolean bought = false;
@@ -42,6 +42,11 @@ public class Buyer implements Runnable {
                 str.append("(").append(i).append(";").append(j).append(")");
             }
             str.append("]");
+            try {
+                Thread.sleep(r.nextInt(50) + 50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             boolean res = usher.tryBuy();
             if (res) {
                 System.out.println(str.append(" - succeeded").toString());
